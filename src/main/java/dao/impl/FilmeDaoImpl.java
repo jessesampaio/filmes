@@ -30,7 +30,8 @@ public class FilmeDaoImpl implements FilmeDao {
 		return em.find(Filme.class, cod);
 	}
 	
-	@SuppressWarnings("uncheked")
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Filme> buscarTodos() {
 		String jpql = "SELECT X FROM Filme x";
 		Query query = em.createNamedQuery(jpql);

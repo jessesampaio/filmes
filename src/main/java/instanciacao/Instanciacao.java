@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,13 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import dominio.Artista;
 import dominio.Filme;
 import dominio.Participacao;
+import servico.ArtistaServico;
+import servico.FilmeServico;
+import servico.ParticipacaoServico;
 
 @WebServlet("/Instanciacao")
 public class Instanciacao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		try{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
@@ -38,36 +37,27 @@ public class Instanciacao extends HttpServlet {
 		Participacao p2 = new Participacao(null, "Howard Hughes", new BigDecimal("1000000.00"), f1, a1);
 		Participacao p3 = new Participacao(null, "Rose Bukater", new BigDecimal("1000000.00"), f2, a3);
 		Participacao p4 = new Participacao(null, "Katharine Hepburn", new BigDecimal("500000.00"), f1, a2);
-		System.out.println("antes do emf");
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("meujpa");
-		System.out.println("Criando o EM");
-		EntityManager em = emf.createEntityManager();
-		System.out.println("Passei aqui _em");
 		
-		em.getTransaction().begin();
-		System.out.println("Passei pelo Begin");
-		em.persist(f1);
-		em.persist(f2);
-		em.persist(a1);
-		em.persist(a2);
-		em.persist(a3);		
-		em.persist(p1);
-		em.persist(p2);
-		em.persist(p3);
-		em.persist(p4);
-		System.out.println("Antes do Commit");
-		em.getTransaction().commit();
-		System.out.println("Depois do Commit");
-		em.close();
-		System.out.println("em.close");
-		emf.close();
-		System.out.println("emf.close");
+		ArtistaServico as = new ArtistaServico();
+		FilmeServico fs = new FilmeServico();
+		ParticipacaoServico ps = new ParticipacaoServico();
+		
+		fs.inserirAtuaizar(f1);
+		fs.inserirAtuaizar(f2);
+		
+		as.inserirAtuaizar(a1);
+		as.inserirAtuaizar(a2);
+		as.inserirAtuaizar(a3);
+		
+		ps.inserirAtuaizar(p1);
+		ps.inserirAtuaizar(p2);
+		ps.inserirAtuaizar(p3);
+		ps.inserirAtuaizar(p4);
+		
 		response.getWriter().append("Pronto!");
-
 		}catch(ParseException e){
 			response.getWriter().append("Erro ao instanciar data. Instância não criada");
 		}
 	}
 	
-
 }

@@ -30,7 +30,8 @@ public class ParticipacaoDaoImpl implements ParticipacaoDao {
 		return em.find(Participacao.class, cod);
 	}
 	
-	@SuppressWarnings("uncheked")
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Participacao> buscarTodos() {
 		String jpql = "SELECT X FROM Participacao x";
 		Query query = em.createNamedQuery(jpql);

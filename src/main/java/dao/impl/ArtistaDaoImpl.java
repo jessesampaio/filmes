@@ -30,11 +30,11 @@ public class ArtistaDaoImpl implements ArtistaDao {
 		return em.find(Artista.class, cod);
 	}
 	
-	@SuppressWarnings("uncheked")
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Artista> buscarTodos() {
-		String jpql = "SELECT X FROM Artista x";
+		String jpql = "SELECT x FROM Artista x";
 		Query query = em.createNamedQuery(jpql);
 		return query.getResultList();
 	}
-
 }
