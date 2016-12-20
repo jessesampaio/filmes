@@ -42,17 +42,17 @@ public class Instanciacao extends HttpServlet {
 		FilmeServico fs = new FilmeServico();
 		ParticipacaoServico ps = new ParticipacaoServico();
 		
-		fs.inserirAtuaizar(f1);
-		fs.inserirAtuaizar(f2);
+		fs.inserirAtualizar(f1);
+		fs.inserirAtualizar(f2);
 		
-		as.inserirAtuaizar(a1);
-		as.inserirAtuaizar(a2);
-		as.inserirAtuaizar(a3);
+		as.inserirAtualizar(a1);
+		as.inserirAtualizar(a2);
+		as.inserirAtualizar(a3);
 		
-		ps.inserirAtuaizar(p1);
-		ps.inserirAtuaizar(p2);
-		ps.inserirAtuaizar(p3);
-		ps.inserirAtuaizar(p4);
+		ps.inserirAtualizar(p1);
+		ps.inserirAtualizar(p2);
+		ps.inserirAtualizar(p3);
+		ps.inserirAtualizar(p4);
 		
 		response.getWriter().append("Pronto!");
 		}catch(ParseException e){

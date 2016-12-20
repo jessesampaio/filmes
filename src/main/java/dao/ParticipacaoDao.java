@@ -6,8 +6,8 @@ import dominio.Participacao;
 
 public interface ParticipacaoDao {
 
-	public void inserirAtuaizar(Participacao x);
-	public void ecluir(Participacao x);
+	public void inserirAtualizar(Participacao x);
+	public void excluir(Participacao x);
 	public Participacao buscar(int cod);
 	public List<Participacao> buscarTodos();
 	

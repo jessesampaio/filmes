@@ -15,13 +15,13 @@ public class ArtistaDaoImpl implements ArtistaDao {
 	public ArtistaDaoImpl(){
 		this.em = EM.getLocalEm();
 	}
-	public void inserirAtuaizar(Artista x) {
+	public void inserirAtualizar(Artista x) {
 		if(x.getCodArtista() != null){
 			x = em.merge(x);
 		}
 		em.persist(x);
 	}
-	public void ecluir(Artista x) {
+	public void excluir(Artista x) {
 		x = em.merge(x);
 		em.remove(x);
 

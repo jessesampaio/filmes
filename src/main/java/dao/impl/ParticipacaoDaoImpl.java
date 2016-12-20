@@ -15,13 +15,13 @@ public class ParticipacaoDaoImpl implements ParticipacaoDao {
 	public ParticipacaoDaoImpl(){
 		this.em = EM.getLocalEm();
 	}
-	public void inserirAtuaizar(Participacao x) {
+	public void inserirAtualizar(Participacao x) {
 		if(x.getCodParticipacao() != null){
 			x = em.merge(x);
 		}
 		em.persist(x);
 	}
-	public void ecluir(Participacao x) {
+	public void excluir(Participacao x) {
 		x = em.merge(x);
 		em.remove(x);
 

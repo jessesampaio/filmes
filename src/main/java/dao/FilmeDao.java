@@ -6,8 +6,8 @@ import dominio.Filme;
 
 public interface FilmeDao {
 
-	public void inserirAtuaizar(Filme x);
-	public void ecluir(Filme x);
+	public void inserirAtualizar(Filme x);
+	public void excluir(Filme x);
 	public Filme buscar(int cod);
 	public List<Filme> buscarTodos();
 	

@@ -15,13 +15,13 @@ public class FilmeDaoImpl implements FilmeDao {
 	public FilmeDaoImpl(){
 		this.em = EM.getLocalEm();
 	}
-	public void inserirAtuaizar(Filme x) {
+	public void inserirAtualizar(Filme x) {
 		if(x.getCodFilme() != null){
 			x = em.merge(x);
 		}
 		em.persist(x);
 	}
-	public void ecluir(Filme x) {
+	public void excluir(Filme x) {
 		x = em.merge(x);
 		em.remove(x);
 

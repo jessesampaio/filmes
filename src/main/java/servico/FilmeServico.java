@@ -4,7 +4,7 @@ import java.util.List;
 
 import dao.DaoFactory;
 import dao.FilmeDao;
-import dao.impl.EM;
+import dao.Transacion;
 import dominio.Filme;
 
 public class FilmeServico {
@@ -15,16 +15,30 @@ public class FilmeServico {
 		dao = DaoFactory.criarFilmeDao();
 	}
 
-	public void inserirAtuaizar(Filme x) {
-		EM.getLocalEm().getTransaction().begin();
-		dao.inserirAtuaizar(x);
-		EM.getLocalEm().getTransaction().commit();
+	public void inserirAtualizar(Filme x) {
+		try {
+			Transacion.begin();
+			dao.inserirAtualizar(x);
+			Transacion.commit();
+		} catch (RuntimeException e) {
+			if (Transacion.isActive()) {
+				Transacion.rollback();
+			}
+			System.out.println("Erro: " + e.getMessage());
+		}
 	}
 
-	public void ecluir(Filme x) {
-		EM.getLocalEm().getTransaction().begin();
-		dao.ecluir(x);
-		EM.getLocalEm().getTransaction().commit();
+	public void excluir(Filme x) {
+		try {
+			Transacion.begin();
+			dao.excluir(x);
+			Transacion.commit();
+		} catch (RuntimeException e) {
+			if (Transacion.isActive()) {
+				Transacion.rollback();
+			}
+			System.out.println("Erro: " + e.getMessage());
+		}
 	}
 
 	public Filme buscar(int cod) {
