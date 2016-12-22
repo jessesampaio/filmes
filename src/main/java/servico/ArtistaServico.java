@@ -14,31 +14,51 @@ public class ArtistaServico {
 	public ArtistaServico() {
 		dao = DaoFactory.criarArtistaDao();
 	}
-	
-	public void inserirAtualizar(Artista x) throws ServicoException {
+
+	public void inserir(Artista x) throws ServicoException {
 		try {
 			Artista aux = dao.buscaNomeExato(x.getNome());
-			if(aux != null){
+			if (aux != null) {
 				throw new ServicoException("Já Existe um artista com esse nome!", 1);
-			}		
+			}
 			Transacion.begin();
 			dao.inserirAtualizar(x);
 			Transacion.commit();
 		} catch (RuntimeException e) {
-			if(Transacion.isActive()){
+			if (Transacion.isActive()) {
+				Transacion.rollback();
+			}
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	public void atualizar(Artista x) throws ServicoException {
+		try {
+			Artista aux = dao.buscaNomeExatoDiferente(x.getCodArtista(), x.getNome());
+			if (aux != null) {
+				throw new ServicoException("Já Existe um artista com esse nome!", 1);
+			}
+			Transacion.begin();
+			dao.inserirAtualizar(x);
+			Transacion.commit();
+		} catch (RuntimeException e) {
+			if (Transacion.isActive()) {
 				Transacion.rollback();
 			}
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
-	public void excluir(Artista x) {
+	public void excluir(Artista x) throws ServicoException {
 		try {
+			x = dao.buscar(x.getCodArtista());
+			if (!x.getParticipacoes().isEmpty()) {
+				throw new ServicoException("Exclusão não permitida: Este artista possui participações", 2);
+			}
 			Transacion.begin();
 			dao.excluir(x);
 			Transacion.commit();
 		} catch (RuntimeException e) {
-			if(Transacion.isActive()){
+			if (Transacion.isActive()) {
 				Transacion.rollback();
 			}
 			System.out.println("Erro: " + e.getMessage());
@@ -52,8 +72,12 @@ public class ArtistaServico {
 	public List<Artista> buscarTodos() {
 		return dao.buscarTodos();
 	}
-	
+
 	public List<Artista> buscarTodosOrdenadosPorNome() {
 		return dao.buscarTodosOrdenadosPorNome();
+	}
+
+	public List<Artista> buscarPorNome(String trecho) {
+		return dao.buscarPorNome(trecho);
 	}
 }

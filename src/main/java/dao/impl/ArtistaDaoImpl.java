@@ -36,7 +36,7 @@ public class ArtistaDaoImpl implements ArtistaDao {
 	@Override
 	public List<Artista> buscarTodos() {
 		String jpql = "SELECT x FROM Artista x";
-		Query query = em.createNamedQuery(jpql);
+		Query query = em.createQuery(jpql);
 		return query.getResultList();
 	}
 
@@ -44,7 +44,7 @@ public class ArtistaDaoImpl implements ArtistaDao {
 	@Override
 	public List<Artista> buscarTodosOrdenadosPorNome() {
 		String jpql = "SELECT x FROM Artista x ORDER BY x.nome";
-		Query query = em.createNamedQuery(jpql);
+		Query query = em.createQuery(jpql);
 		return query.getResultList();
 	}
 
@@ -59,4 +59,25 @@ public class ArtistaDaoImpl implements ArtistaDao {
 		// retorna nulo, não tem artista com esse nome
 		return (aux.size() > 0) ? aux.get(0) : null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Artista buscaNomeExatoDiferente(Integer codigo, String nome) {
+		String jpql = "SELECT x FROM Artista x WHERE x.codArtista <> :p0 AND x.nome = :p1";
+		Query query = em.createQuery(jpql);
+		query.setParameter("p0", codigo);
+		query.setParameter("p1", nome);
+		List<Artista> aux = query.getResultList();
+		return (aux.size() > 0) ? aux.get(0) : null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Artista> buscarPorNome(String trecho) {
+		String jpql = "SELECT x FROM Artista x WHERE x.nome LIKE :p1";
+		Query query = em.createQuery(jpql);
+		query.setParameter("p1", "%" + trecho + "%");
+		return query.getResultList();
+	}
+
 }

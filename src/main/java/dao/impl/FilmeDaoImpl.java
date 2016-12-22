@@ -11,30 +11,44 @@ import dominio.Filme;
 public class FilmeDaoImpl implements FilmeDao {
 
 	private EntityManager em;
-	
-	public FilmeDaoImpl(){
+
+	public FilmeDaoImpl() {
 		this.em = EM.getLocalEm();
 	}
+
 	public void inserirAtualizar(Filme x) {
-		if(x.getCodFilme() != null){
+		if (x.getCodFilme() != null) {
 			x = em.merge(x);
 		}
 		em.persist(x);
 	}
+
 	public void excluir(Filme x) {
 		x = em.merge(x);
 		em.remove(x);
 
 	}
+
 	public Filme buscar(int cod) {
 		return em.find(Filme.class, cod);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Filme> buscarTodos() {
-		String jpql = "SELECT X FROM Filme x";
-		Query query = em.createNamedQuery(jpql);
+		String jpql = "SELECT x FROM Filme x";
+		Query query = em.createQuery(jpql);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Filme> buscarPorNomeAno(String nome, int anoMin, int anoMax) {
+		String jpql = "SELECT x FROM Filme x WHERE x.titulo	LIKE :p1 AND x.ano >= :p2 AND x.ano <= :p3";
+		Query query = em.createQuery(jpql);
+		query.setParameter("p1", "%"+nome+"%");
+		query.setParameter("p2", anoMin);
+		query.setParameter("p3", anoMax);
 		return query.getResultList();
 	}
 
